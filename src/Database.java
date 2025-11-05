@@ -2,11 +2,19 @@ import java.sql.*;
 
 public class Database {
     private Connection connection;
+    private static Database instance = null;
 
-    public Database() throws SQLException {
+    private Database() throws SQLException {
         String url = "jdbc:sqlite:database/sushi.db";
         connection = DriverManager.getConnection(url);
         System.out.println("Connesso al database");
+    }
+
+    public static Database getInstance() throws SQLException {
+        if(instance == null){
+            instance = new Database();
+        }
+        return instance;
     }
 
     public String selectAll() {
